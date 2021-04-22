@@ -8,13 +8,15 @@ Note: This is a Windows only library for now!
 ## TODO
 
 PR welcome :)
-- [] fix hl
-- [] add linux
-- [] add mac
-- [] write clipboard
+- [ ] fix hl
+- [ ] add linux
+- [ ] add mac
+- [ ] write clipboard
+- [ ] ship haxelib with dlls
 
 ---
-
+ - [Install](#install)
+ - [API](#API)
  - [Directory structure](#directory-structure)
  - [Building the native library](#building-the-native-library)
    - [On Windows](#on-windows)
@@ -22,12 +24,47 @@ PR welcome :)
  - [Running](#running)
    - [On Windows](#on-windows-1)
  - [Troubleshooting](#troubleshooting)
+ 
+## Install
+
+`haxelib install native-clipboard`
+
+If you want to use with OpenFl, you just have to add this to your `project.xml`:
+
+`<haxelib name="native-clipboard"/>
+
+If you want the last version of native-clipboard, you can install with git:
+
+`haxelib git native-clipboard https://github.com/loudoweb/native-clipboard.git`
+
+But you will also have to build the dll by yourself (see [building native library](#building-the-native-library))
+
+## API
+
+```haxe
+//example: get an image with openfl
+var bytes = Clipboard.get_image();
+if(bytes != null && bytes.length > 0)
+{
+	bd = BitmapData.fromBytes(bytes);
+}
+
+//example: get an html text
+var htmlstr = Clipboard.get_data(EClipboard.TYPE_HTML);
+
+//example: get a svg
+var svgstr = Clipboard.get_data(EClipboard.TYPE_SVG);
+
+//example: get a pdf
+var svgstr = Clipboard.get_bytes(EClipboard.TYPE_AI);
+```
 
 ## Directory structure
 
- - [`native`](haxe/extension)
+ - [`haxe/extension`](haxe/extension)
 	- [`Clipboard.hx`](haxe/extension/Clipboard.hx) - `ammer` library definition for the `Clipboard` library. This class essentially maps Haxe types to the C library.
- - [`Sample.hx`](Sample.hx) - main program using the library in regular Haxe code.
+	- [`EClipboard.hx`](haxe/extension/EClipboard.hx) - helper class: some types you may encounter in clipboard.
+ - [`Sample.hx`](Sample.hx) - sample using the library in regular Haxe code.
  - [`build-common.hxml`](build-common.hxml) - build configuration common to all targets.
  - [`build-cpp.hxml`](build-cpp.hxml) - build configuration for hxcpp.
  - [`build-hl.hxml`](build-hl.hxml) - build configuration for HashLink. Must be call from VS developer prompt.
@@ -38,6 +75,7 @@ PR welcome :)
    - [`clipboard.c`](native/adder.c)
    - [`clipboard.h`](native/adder.h)
    - [`Makefile.win`](native/Makefile.win) - build script for building the library on Windows (using MSVC). Must be call from VS developer prompt.
+   - [`build_windows.bat`](native/Makefile.win) - executable that ca script for call the makefile. Must be call from VS developer prompt.
 
 ## Building the native library
 
@@ -45,7 +83,7 @@ Execute native/Makefile from VS developer prompt.
 
 ### On Windows
 
-Assuming [MSVC](https://visualstudio.microsoft.com/downloads/) is set up on the local machine, navigate to the `native` directory in a Visual Studio Developer Command Prompt (or a regular command prompt initialised by running `vcvars32`), then use the provided `Makefile.win`:
+Assuming [MSVC](https://visualstudio.microsoft.com/downloads/) is set up on the local machine, navigate to the `native` directory in a Visual Studio Developer Command Prompt, then use the provided `Makefile.win`:
 
 ```bash
 $ cd <path to poc directory>/native
@@ -53,6 +91,8 @@ $ nmake /F Makefile.win
 ```
 
 This should create (among others) the files `clipboard.dll` and `clipboard.lib` in the `native` directory.
+
+If you want to compile dll for 32bit, use the x86 VS developer prompt, and the x64 VS developer prompt to compile for 64 bit.
 
 ## Building the Haxe project
 
