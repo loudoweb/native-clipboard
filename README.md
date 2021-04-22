@@ -31,7 +31,7 @@ PR welcome :)
 
 If you want to use with OpenFl, you just have to add this to your `project.xml`:
 
-`<haxelib name="native-clipboard"/>
+`<haxelib name="native-clipboard"/>`
 
 If you want the last version of native-clipboard, you can install with git:
 
