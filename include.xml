@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension>
+
+	
+	
+	<section if="windows"><!-- || linux || mac || hl -->
+		<haxelib name="ammer" />
+		<haxedef name="ammer.lib.clipboard.include" value="native" />
+		<haxedef name="ammer.lib.clipboard.library" value="native" />
+	</section>
+
+	<section if="windows">
+		<ndll name="native" />
+		<haxedef name="ammer.lib.clipboard.headers" value="tmp.clipboard.h" />
+	</section>
+	
+	<section if="linux">
+		<log warn="linux has not been implemented yet" />
+	</section>
+	
+	<section if="mac">
+		<log warn="mac has not been implemented yet" />
+	</section>
+
+	<section if="hl">
+		<log warn="hl is not yet supported. Ammer library needs to be fixed." />
+		<!--<haxedef name="ammer.hl.hlInclude" value="C:\Development\hl-1.10.0-win\include" />-->
+		<!--<haxedef name="ammer.hl.hlLibrary" value="C:\Development\hl-1.10.0-win build-hl.hxml" />-->
+	</section>
+
+</extension>

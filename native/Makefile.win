@@ -1,0 +1,12 @@
+all: clipboard.dll tmp.clipboard.h
+
+clipboard.dll: clipboard.obj
+	cl /LD clipboard.obj
+
+clipboard.obj: clipboard.c
+	cl /c clipboard.c
+	
+tmp.clipboard.h: clipboard.h
+	copy clipboard.h tmp.clipboard.h
+
+.PHONY: all
