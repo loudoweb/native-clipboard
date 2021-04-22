@@ -1,6 +1,7 @@
 # Haxe Clipboard
 
-This is a library to read clipboard data from Haxe.
+This is a native library to read clipboard data from Haxe.
+It uses [Ammer](https://github.com/Aurel300/ammer/) to generate bindings.
 
 Note: This is a Windows only library for now!
 
