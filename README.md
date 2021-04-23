@@ -20,7 +20,7 @@ PR welcome :)
  - [Directory structure](#directory-structure)
  - [Building the native library](#building-the-native-library)
    - [On Windows](#on-windows)
- - [Building the Haxe project](#building-the-haxe-project)
+ - [Building the Sample Haxe project](#building-the-sample-haxe-project)
  - [Running](#running)
    - [On Windows](#on-windows-1)
  - [Troubleshooting](#troubleshooting)
@@ -71,11 +71,14 @@ var svgstr = Clipboard.get_bytes(EClipboard.TYPE_AI);
  - [`build-cpp.bat`](build-cpp.bat) - executable to build hxcpp.
  - [`build-hl.bat`](build-hl.bat) - executable to build hl. Must be call from VS developer prompt.
  - [`include.xml`](include.xml) - Lime/OpenFl extension
- - [`native`](native) - contains sources to the `adder` library.
-   - [`clipboard.c`](native/adder.c)
-   - [`clipboard.h`](native/adder.h)
-   - [`Makefile.win`](native/Makefile.win) - build script for building the library on Windows (using MSVC). Must be call from VS developer prompt.
-   - [`build_windows.bat`](native/Makefile.win) - executable that ca script for call the makefile. Must be call from VS developer prompt.
+ - [`native`](native) - contains sources to the `clipboard` library.
+   - [`clipboard.c`](native/clipboard.c)
+   - [`clipboard.h`](native/clipboard.h)
+   - [`Makefile.win`](native/Makefile.win) - build script for building the library on Windows (using MSVC). Must be call from x86 VS developer prompt.
+   - [`Makefile64.win`](native/Makefile.win) - build script for building the library on Windows (using MSVC). Must be call from x64 VS developer prompt.
+   - [`build_windows.bat`](native/build_windows.bat) - executable that call the makefile. Must be call from x86 VS developer prompt.
+   - [`build_windows64.bat`](native/build_windows64.bat) - executable that call the makefile. Must be call from x64 VS developer prompt.
+ - [`library`](library) - contains dlls in different folder depending on OS/architecture.
 
 ## Building the native library
 
@@ -94,7 +97,7 @@ This should create (among others) the files `clipboard.dll` and `clipboard.lib` 
 
 If you want to compile dll for 32bit, use the x86 VS developer prompt, and the x64 VS developer prompt to compile for 64 bit.
 
-## Building the Haxe project
+## Building the Sample Haxe project
 
 Once the native library is built, the Haxe project itself can be compiled. The necessary configuration is already provided in the HXML files. Some targets require additional configuration, which needs to be provided on the command line via a define. See the [target-specific configuration](https://github.com/Aurel300/ammer#target-specifics) section in the main README for more information about these defines.
 

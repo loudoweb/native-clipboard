@@ -1,0 +1,10 @@
+{
+	"name": "native-clipboard",
+	"url": "https://github.com/loudoweb/native-clipboard",
+	"license": "MIT",
+	"tags": ["cpp", "native", "extension"],
+	"description": "Haxe native extension to read windows clipboard.",
+	"version": "0.0.1",
+	"releasenote": "Read only on windows hxcpp",
+	"contributors": [ "loudoweb" ]
+}

@@ -1,7 +1,7 @@
 all: clipboard.dll tmp.clipboard.h moveResult
 
 moveResult: 
-	mkdir .\..\library\Windows && move /Y clipboard.dll .\..\library\Windows\clipboard.dll && move /Y clipboard.obj .\..\library\Windows\clipboard.obj
+	mkdir .\..\library\Windows64 && move /Y clipboard.dll .\..\library\Windows64\clipboard.dll && move /Y clipboard.obj .\..\library\Windows64\clipboard.obj
 
 clipboard.dll: clipboard.obj
 	cl /LD clipboard.obj

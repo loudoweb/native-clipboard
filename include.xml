@@ -2,15 +2,22 @@
 <extension>
 
 	
-	
 	<section if="windows"><!-- || linux || mac || hl -->
-		<architecture name="x86" exclude="x64" /><!-- need to find a way to compile for x64 with cl -->
 		<haxelib name="ammer" />
-		<haxedef name="ammer.lib.clipboard.include" value="${haxelib:native-clipboard}\native" />
-		<haxedef name="ammer.lib.clipboard.library" value="${haxelib:native-clipboard}\native" />
 	</section>
 
 	<section if="windows">
+		
+		<section unless="X86">
+			<!--<architecture name="x64" exclude="x86"/>-->
+			<haxedef name="ammer.lib.clipboard.include" value="${haxelib:native-clipboard}\native" />
+			<haxedef name="ammer.lib.clipboard.library" value="${haxelib:native-clipboard}\library/Windows64" />
+		</section>
+		<section if="X86">
+			<architecture name="x86" exclude="x64"/>
+			<haxedef name="ammer.lib.clipboard.include" value="${haxelib:native-clipboard}\native" />
+			<haxedef name="ammer.lib.clipboard.library" value="${haxelib:native-clipboard}\library/Windows" />
+		</section>
 		<haxedef name="ammer.lib.clipboard.headers" value="${haxelib:native-clipboard}\native\tmp.clipboard.h" />
 	</section>
 	

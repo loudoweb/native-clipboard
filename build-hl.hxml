@@ -1,2 +1,3 @@
 build-common.hxml
+-D ammer.lib.clipboard.library=library/Windows
 --hl bin/hl/sample.hl

@@ -1,4 +1,3 @@
 --library ammer
 --main Sample
 -D ammer.lib.clipboard.include=native
--D ammer.lib.clipboard.library=native
