@@ -12,7 +12,7 @@ PR welcome :)
 - [ ] add linux
 - [ ] add mac
 - [ ] write clipboard
-- [ ] ship haxelib with dlls
+- [x] ship haxelib with dlls
 
 ---
  - [Install](#install)
