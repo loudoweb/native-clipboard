@@ -37,4 +37,11 @@ class Clipboard extends Library<"clipboard"> {
 	 * @return haxe.io.Bytes
 	 */
 	public static function get_bytes(type:String, loaded:SizeOfReturn):haxe.io.Bytes;
+
+	public static function clear():Int;
+
+	public static function set_text(str:String):Int;
+
+	public static function set_data(type:String, str:String):Int;
+
 }

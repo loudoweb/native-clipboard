@@ -3,9 +3,15 @@
 #include <string.h>
 
 #pragma comment(lib, "user32.lib")
+#pragma comment(lib, "Kernel32.lib")
 
 #include <windows.h>
 #include "clipboard.h"
+#include <stdbool.h>
+#include <strsafe.h>
+
+void display_last_error();
+void GetClipboardFormatName_helper (UINT uFormat, char *formats, char szFormatName[80], LPCSTR lpFormatName);
 
 LIB_EXPORT int count_formats() {
 	int a = CountClipboardFormats();
@@ -21,14 +27,14 @@ LIB_EXPORT char *list_available_format() {
 
 	// Open the clipboard. 
 	if (!OpenClipboard(NULL)) 
-        return "";
+        return NULL;
 
 	int a = CountClipboardFormats();
 
 	if(a == 0)
 	{
 		CloseClipboard(); 
-		return "";
+		return NULL;
 	}
 
 	uFormat = EnumClipboardFormats(0);
@@ -126,7 +132,64 @@ LIB_EXPORT unsigned char *get_bytes(const char *type, size_t *loaded) {
 	
 }
 
-GetClipboardFormatName_helper (UINT uFormat, char *formats, char szFormatName[80], LPCSTR lpFormatName)
+LIB_EXPORT bool clear() {
+	 if (!OpenClipboard(NULL)) 
+        return FALSE; 
+    bool isSuccess = EmptyClipboard(); 
+	CloseClipboard();
+	return isSuccess;
+}
+
+LIB_EXPORT bool set_text(const char *str) {
+	//GetForegroundWindow()
+	if (!OpenClipboard(0)) 
+	{
+		display_last_error();
+		return FALSE; 
+	}
+		
+	const size_t len = strlen(str) + 1;
+	HGLOBAL hglb =  GlobalAlloc(GMEM_MOVEABLE, len);
+	memcpy(GlobalLock(hglb), str, len);
+	GlobalUnlock(hglb);
+	//EmptyClipboard();
+	HANDLE res = SetClipboardData(CF_TEXT, hglb);
+	bool isSet = res ? TRUE: FALSE;
+	if(!isSet)
+	{
+		GlobalFree(hglb);
+		display_last_error();
+	}
+	CloseClipboard(); 
+	return isSet;
+}
+
+LIB_EXPORT bool set_data(const char *type, const char *str) {
+	if (!OpenClipboard(0)) 
+	{
+		display_last_error();
+		return FALSE; 
+	}
+
+	int cfid = RegisterClipboardFormat(type);
+		
+	const size_t len = strlen(str) + 1;
+	HGLOBAL hglb =  GlobalAlloc(GMEM_MOVEABLE, len);
+	memcpy(GlobalLock(hglb), str, len);
+	GlobalUnlock(hglb);
+	//EmptyClipboard();
+	HANDLE res = SetClipboardData(cfid, hglb);
+	bool isSet = res ? TRUE: FALSE;
+	if(!isSet)
+	{
+		GlobalFree(hglb);
+		display_last_error();
+	}
+	CloseClipboard(); 
+	return isSet;
+}
+
+void GetClipboardFormatName_helper (UINT uFormat, char *formats, char szFormatName[80], LPCSTR lpFormatName)
 {
     switch (uFormat)
     {
@@ -161,4 +224,35 @@ GetClipboardFormatName_helper (UINT uFormat, char *formats, char szFormatName[80
 			break;
     }
    formats = lstrcat(formats, lpFormatName);
+}
+
+void display_last_error()
+{
+    DWORD dw = GetLastError(); 
+
+	if(!dw)
+		return;
+
+	LPVOID lpMsgBuf;
+	LPVOID lpDisplayBuf;
+
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+        FORMAT_MESSAGE_FROM_SYSTEM |
+        FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        dw,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR) &lpMsgBuf,
+        0, NULL );
+		lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT, 
+       		(lstrlen((LPCTSTR)lpMsgBuf) + 40) * sizeof(TCHAR)); 
+    	StringCchPrintf((LPTSTR)lpDisplayBuf, 
+        	LocalSize(lpDisplayBuf) / sizeof(TCHAR),
+       		TEXT("clipboard.c >> Error %d: %s"), dw, lpMsgBuf);
+
+	printf(lpDisplayBuf);
+
+	LocalFree(lpMsgBuf);
+	LocalFree(lpDisplayBuf);
 }

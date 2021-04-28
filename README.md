@@ -1,6 +1,6 @@
 # Haxe Clipboard
 
-This is a native library to read clipboard data from Haxe.
+This is a native library to read and write clipboard data from Haxe.
 It uses [Ammer](https://github.com/Aurel300/ammer/) to generate bindings.
 
 Note: This is a Windows only library for now!
@@ -33,6 +33,9 @@ If you want to use with OpenFl, you just have to add this to your `project.xml`:
 
 `<haxelib name="native-clipboard"/>`
 
+And you can use x86 binaries instead of x64 by adding this above your haxelib tag:
+`<define name="X86"/>`
+
 If you want the last version of native-clipboard, you can install with git:
 
 `haxelib git native-clipboard https://github.com/loudoweb/native-clipboard.git`
@@ -57,6 +60,9 @@ var svgstr = Clipboard.get_data(EClipboard.TYPE_SVG);
 
 //example: get a pdf
 var svgstr = Clipboard.get_bytes(EClipboard.TYPE_AI);
+
+/set html text
+Clipboard.set_data(EClipboard.TYPE_HTML, ClipboardUtils.formatHTML('<p>test html : this is <b>bold</b></p>'))
 ```
 
 ## Directory structure
