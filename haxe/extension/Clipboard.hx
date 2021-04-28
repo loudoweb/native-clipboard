@@ -33,15 +33,47 @@ class Clipboard extends Library<"clipboard"> {
 	public static function get_data(type:String):String;
 	/**
 	 * Get data as bytes.
-	 * @param type You can use EClipboard to have some common formats. e.g: get_bytes("PNG")
+	 * @param type You can use EClipboard.hx to have some common formats. e.g: get_bytes("PNG")
 	 * @return haxe.io.Bytes
 	 */
 	public static function get_bytes(type:String, loaded:SizeOfReturn):haxe.io.Bytes;
 
-	public static function clear():Int;
+	/**
+	 * 
+	 * You should clear the clipboard once before writing anything
+	 * @return Bool
+	 */
+	public static function clear():Bool;
 
-	public static function set_text(str:String):Int;
+	/**
+	 * Simple text
+	 * @param str 
+	 * @return Bool
+	 */
+	public static function set_text(str:String):Bool;
 
-	public static function set_data(type:String, str:String):Int;
+	/**
+	 * Write other kind of strings in the clipboard like html, svg, etc.
+	 * @param type You can use EClipboard to have some common formats.
+	 * @param str Some formats may need additional treatment that you can find in ClipboardUtils.hx
+	 * @return Bool success
+	 */
+	public static function set_data(type:String, str:String):Bool;
+
+	/**
+	 * Write PNG
+	 * @param data PNG only
+	 * @return Bool success
+	 * 
+	 */
+	public static function set_image(data:Bytes, dataLen:SizeOf<"data">):Bool;
+
+	/**
+	 * Write bytes
+	 * @param type You can use EClipboard to have some common formats.
+	 * @param data 
+	 * @return Bool succes
+	 */
+	public static function set_bytes(type:String, data:Bytes, dataLen:SizeOf<"data">):Bool;
 
 }

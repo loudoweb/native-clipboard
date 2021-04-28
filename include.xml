@@ -22,17 +22,17 @@
 	</section>
 	
 	<section if="linux">
-		<echo value="linux has not been implemented yet" />
+		<!--<echo value="linux has not been implemented yet" />-->
 	</section>
 	
 	<section if="mac">
-		<echo value="mac has not been implemented yet" />
+		<!--<echo value="mac has not been implemented yet" />-->
 	</section>
 
 	<section if="hl">
-		<echo value="hl is not yet supported. Ammer library needs to be fixed." />
-		<!--<haxedef name="ammer.hl.hlInclude" value="::DEFINE_HL_PATH::\include" />-->
-		<!--<haxedef name="ammer.hl.hlLibrary" value="::DEFINE_HL_PATH::" />-->
+		<!--<echo value="hl is not yet supported. Ammer library needs to be fixed." />-->
+		<haxedef name="ammer.hl.hlInclude" value="::DEFINE_HL_PATH::\include" />
+		<haxedef name="ammer.hl.hlLibrary" value="::DEFINE_HL_PATH::" />
 	</section>
 
 </extension>

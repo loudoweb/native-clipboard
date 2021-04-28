@@ -189,6 +189,56 @@ LIB_EXPORT bool set_data(const char *type, const char *str) {
 	return isSet;
 }
 
+LIB_EXPORT bool set_image(unsigned char *data, int len)
+{
+	if (!OpenClipboard(0)) 
+	{
+		display_last_error();
+		return FALSE; 
+	}
+
+	int cfid = RegisterClipboardFormat("PNG");
+		
+	HGLOBAL hglb =  GlobalAlloc(GMEM_MOVEABLE, len);
+	memcpy(GlobalLock(hglb), data, len);
+	GlobalUnlock(hglb);
+	//EmptyClipboard();
+	HANDLE res = SetClipboardData(cfid, hglb);
+	bool isSet = res ? TRUE: FALSE;
+	if(!isSet)
+	{
+		GlobalFree(hglb);
+		display_last_error();
+	}
+	CloseClipboard(); 
+	return isSet;
+}
+
+LIB_EXPORT bool set_bytes(const char *type, unsigned char *data, int len)
+{
+	if (!OpenClipboard(0)) 
+	{
+		display_last_error();
+		return FALSE; 
+	}
+
+	int cfid = RegisterClipboardFormat(type);
+		
+	HGLOBAL hglb =  GlobalAlloc(GMEM_MOVEABLE, len);
+	memcpy(GlobalLock(hglb), data, len);
+	GlobalUnlock(hglb);
+	//EmptyClipboard();
+	HANDLE res = SetClipboardData(cfid, hglb);
+	bool isSet = res ? TRUE: FALSE;
+	if(!isSet)
+	{
+		GlobalFree(hglb);
+		display_last_error();
+	}
+	CloseClipboard(); 
+	return isSet;
+}
+
 void GetClipboardFormatName_helper (UINT uFormat, char *formats, char szFormatName[80], LPCSTR lpFormatName)
 {
     switch (uFormat)

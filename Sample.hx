@@ -8,7 +8,7 @@ class Sample {
 		trace('---');
 		trace('text: ${Clipboard.get_text()}');
 		trace('image: ${Clipboard.get_image()}');
-		trace('html: ${Clipboard.get_data(EClipboard.TYPE_HTML)}');
+		trace('html: ${Clipboard.get_data(EClipboard.HTML)}');
 		trace('svg: ${Clipboard.get_data("image/x-inkscape-svg")}');
 		trace('pdf: ${Clipboard.get_bytes("Portable Document Format")}');
 		trace('image2: ${Clipboard.get_bytes("PNG")}');
@@ -17,7 +17,7 @@ class Sample {
 		trace('text: ${Clipboard.get_text()}');
 		trace('set text: ${Clipboard.set_text('test write')}');
 		trace('text: ${Clipboard.get_text()}');
-		trace('set html: ${Clipboard.set_data(EClipboard.TYPE_HTML, ClipboardUtils.formatHTML('<p>test html : this is <b>bold</b></p>'))}');
-		trace('html: ${Clipboard.get_data(EClipboard.TYPE_HTML)}');
+		trace('set html: ${Clipboard.set_data(EClipboard.HTML, ClipboardUtils.formatHTML('<p>test html : this is <b>bold</b></p>'))}');
+		trace('html: ${Clipboard.get_data(EClipboard.HTML)}');
 	}
 }

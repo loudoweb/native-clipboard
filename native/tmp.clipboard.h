@@ -31,6 +31,10 @@ LIB_EXPORT bool set_text(const char *str);
 
 LIB_EXPORT bool set_data(const char *type, const char *str);
 
+LIB_EXPORT bool set_image(unsigned char *data, int len);
+
+LIB_EXPORT bool set_bytes(const char *type, unsigned char *data, int len);
+
 #ifdef __cplusplus
 }
 #endif

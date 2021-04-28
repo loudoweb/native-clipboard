@@ -23,6 +23,26 @@ class ClipboardUtils {
         return output;
     }
 
+    public static function getString(str:String, format:EClipboard = HTML):String
+    {
+        if(str != "")
+        {
+            switch(format)
+            {
+                case HTML:
+                    var begin = str.indexOf("<!--StartFragment-->");
+                    var end = str.indexOf("<!--EndFragment-->");
+                    return str.substring(begin + 20, end);
+                case SVG:
+                    var end = str.indexOf("</svg>");
+                    return str.substring(0, end + 6);
+                default:
+                    return str;
+            }
+        }
+        return str;
+    }
+
     static function formatIndex(start:Int, len:Int):String
     {
         var str:String = "";

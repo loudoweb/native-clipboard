@@ -5,14 +5,16 @@ It uses [Ammer](https://github.com/Aurel300/ammer/) to generate bindings.
 
 Note: This is a Windows only library for now!
 
+### What if I don't use Haxe?
+
+You could compile the Dll and include it in your C/C++ project.
+
 ## TODO
 
 PR welcome :)
 - [ ] fix hl
 - [ ] add linux
 - [ ] add mac
-- [ ] write clipboard
-- [x] ship haxelib with dlls
 
 ---
  - [Install](#install)
@@ -33,7 +35,7 @@ If you want to use with OpenFl, you just have to add this to your `project.xml`:
 
 `<haxelib name="native-clipboard"/>`
 
-And you can use x86 binaries instead of x64 by adding this above your haxelib tag:
+And you can use x86 binaries instead of the default x64 by adding this above your haxelib tag:
 `<define name="X86"/>`
 
 If you want the last version of native-clipboard, you can install with git:
@@ -53,16 +55,16 @@ if(bytes != null && bytes.length > 0)
 }
 
 //example: get an html text
-var htmlstr = Clipboard.get_data(EClipboard.TYPE_HTML);
+var htmlstr = Clipboard.get_data(EClipboard.HTML);
 
 //example: get a svg
-var svgstr = Clipboard.get_data(EClipboard.TYPE_SVG);
+var svgstr = Clipboard.get_data(EClipboard.SVG);
 
 //example: get a pdf
-var svgstr = Clipboard.get_bytes(EClipboard.TYPE_AI);
+var svgstr = Clipboard.get_bytes(EClipboard.PDF);
 
 /set html text
-Clipboard.set_data(EClipboard.TYPE_HTML, ClipboardUtils.formatHTML('<p>test html : this is <b>bold</b></p>'))
+Clipboard.set_data(EClipboard.HTML, ClipboardUtils.formatHTML('<p>test html : this is <b>bold</b></p>'))
 ```
 
 ## Directory structure
@@ -70,6 +72,7 @@ Clipboard.set_data(EClipboard.TYPE_HTML, ClipboardUtils.formatHTML('<p>test html
  - [`haxe/extension`](haxe/extension)
 	- [`Clipboard.hx`](haxe/extension/Clipboard.hx) - `ammer` library definition for the `Clipboard` library. This class essentially maps Haxe types to the C library.
 	- [`EClipboard.hx`](haxe/extension/EClipboard.hx) - helper class: some types you may encounter in clipboard.
+	- [`ClipboardUtils.hx`](haxe/extension/ClipboardUtils.hx) - helper class: format html (input/output), svg, etc.
  - [`Sample.hx`](Sample.hx) - sample using the library in regular Haxe code.
  - [`build-common.hxml`](build-common.hxml) - build configuration common to all targets.
  - [`build-cpp.hxml`](build-cpp.hxml) - build configuration for hxcpp.
