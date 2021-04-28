@@ -1,7 +1,10 @@
 all: clipboard.dll tmp.clipboard.h moveResult
 
-moveResult: 
-	mkdir .\..\library\Windows && move /Y clipboard.dll .\..\library\Windows\clipboard.dll && move /Y clipboard.obj .\..\library\Windows\clipboard.obj
+moveResult: createDir
+	move /Y clipboard.dll .\..\library\Windows\clipboard.dll && move /Y clipboard.obj .\..\library\Windows\clipboard.obj
+
+createDir:
+	if not exist .\..\library\Windows mkdir .\..\library\Windows
 
 clipboard.dll: clipboard.obj
 	cl /LD clipboard.obj
